@@ -1,3 +1,5 @@
+# source used: Dimensionality and Reduction https://metudatascience.github.io/datascience/discretization.html
+
 install.packages("caret")
 install.packages("mlbench")
 library(caret)
