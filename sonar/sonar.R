@@ -2,6 +2,7 @@
 
 install.packages("caret")
 install.packages("mlbench")
+install.packages("arules")
 library(caret)
 library(mlbench)
 library(cluster)
