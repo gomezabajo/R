@@ -10,15 +10,15 @@ xTest <- subset(xTest, select=-PassengerId)
 
 
 
-categoricalVars <- c("HomePlanet", "CryoSleep", "Cabin", "Destination", "VIP", "RoomService", "FoodCourt", "ShoppingMall", "Spa", "VRDeck")
-xTrain[categoricalVars] <- lapply(xTrain[categoricalVars], as.factor)
-xTest[categoricalVars] <- lapply(xTest[categoricalVars], as.factor)
+vars <- c("HomePlanet", "CryoSleep", "Cabin", "Destination", "VIP", "RoomService", "FoodCourt", "ShoppingMall", "Spa", "VRDeck")
+xTrain[vars] <- lapply(xTrain[vars], as.factor)
+xTest[vars] <- lapply(xTest[vars], as.factor)
 
-for (col in categoricalVars) {
+for (col in vars) {
     xTrain[[col]][is.na(xTrain[[col]])] <- names(sort(-table(xTrain[[col]])))[1]
 }
 
-for (col in categoricalVars) {
+for (col in vars) {
     xTest[[col]][is.na(xTest[[col]])] <- names(sort(-table(xTest[[col]])))[1]
 }
 
