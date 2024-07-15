@@ -48,18 +48,6 @@ xTest <- xTest %>%
 xTest <- subset(xTest, select=-Num)
 xTest <- subset(xTest, select=-Side)
 
-categoricalVars <- c("HomePlanet", "CryoSleep", "Destination", "VIP", "Deck")
-xTrain[categoricalVars] <- lapply(xTrain[categoricalVars], as.factor)
-xTest[categoricalVars] <- lapply(xTest[categoricalVars], as.factor)
-
-for (col in categoricalVars) {
-    xTrain[[col]][is.na(xTrain[[col]])] <- names(sort(-table(xTrain[[col]])))[1]
-}
-
-for (col in categoricalVars) {
-    xTest[[col]][is.na(xTest[[col]])] <- names(sort(-table(xTest[[col]])))[1]
-}
-
 
 unique(xTrain$HomePlanet)
 xTrain$HomePlanet <- as.integer(factor(xTrain$HomePlanet, levels=c("Earth", "Europa", "Mars")))
@@ -75,6 +63,29 @@ xTest$Deck <- as.integer(factor(xTest$Deck, levels=c("A", "B", "C", "D", "E", "F
 unique(xTest$Destination)
 xTest$Destination <- as.integer(factor(xTest$Destination, levels=c("55 Cancri e", "PSO J318.5-22", "TRAPPIST-1e")))
 
+categoricalVars <- c("HomePlanet", "CryoSleep", "Destination", "VIP", "Deck")
+xTrain[categoricalVars] <- lapply(xTrain[categoricalVars], as.factor)
+xTest[categoricalVars] <- lapply(xTest[categoricalVars], as.factor)
+
+for (col in categoricalVars) {
+    xTrain[[col]][is.na(xTrain[[col]])] <- names(sort(-table(xTrain[[col]])))[1]
+}
+
+for (col in categoricalVars) {
+    xTest[[col]][is.na(xTest[[col]])] <- names(sort(-table(xTest[[col]])))[1]
+}
+
+install.packages("corrplot")
+library(corrplot)
+corrplot(carsCorr, method="color")
+
+xTrainCor <- sapply(xTrain, as.numeric)
+xTrainCor <- cor(xTrainCor)
+corrplot(xTrainCor, method="color")
+
+xTestCor <- sapply(xTest, as.numeric)
+xTestCor <- cor(xTestCor)
+corrplot(xTestCor, method="color")
 
 install.packages("xgboost")
 library(xgboost)
